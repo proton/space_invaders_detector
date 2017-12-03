@@ -1,5 +1,6 @@
 require 'space_invaders_detector/invader'
 require 'space_invaders_detector/detector'
+require 'space_invaders_detector/image'
 
 module SpaceInvadersDetector
   class Radar

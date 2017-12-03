@@ -57,7 +57,7 @@ module SpaceInvadersDetector
         end
       end
 
-      @map_presence = area / sample.area
+      @map_presence = area.to_f / sample.area
       @probability = matches.to_f / area
     end
   end

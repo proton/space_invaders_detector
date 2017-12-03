@@ -75,7 +75,7 @@ RSpec.describe SpaceInvadersDetector::Radar do
 
       context 'accuracy 0.8' do
         let(:accuracy) { 0.8 }
-        let(:invaders_count) { 7 }
+        let(:invaders_count) { 8 }
         include_examples 'found required invaders'
       end
     end
@@ -99,6 +99,42 @@ RSpec.describe SpaceInvadersDetector::Radar do
         let(:accuracy) { 0.8 }
         let(:invaders_count) { 2 }
         include_examples 'found required invaders'
+      end
+    end
+
+    context 'map3' do
+      let(:map) { SpaceInvadersDetector::Image.new 'spec/support/files/map3.txt' }
+
+      context 'map_presence 1.0' do
+        let(:map_presence) { 1.0 }
+
+        context 'accuracy 1.0' do
+          let(:accuracy) { 1.0 }
+          let(:invaders_count) { 0 }
+          include_examples 'found required invaders'
+        end
+
+        context 'accuracy 0.9' do
+          let(:accuracy) { 0.9 }
+          let(:invaders_count) { 0 }
+          include_examples 'found required invaders'
+        end
+      end
+
+      context 'map_presence 0.8' do
+        let(:map_presence) { 0.5 }
+
+        context 'accuracy 1.0' do
+          let(:accuracy) { 1.0 }
+          let(:invaders_count) { 0 }
+          include_examples 'found required invaders'
+        end
+
+        context 'accuracy 0.9' do
+          let(:accuracy) { 0.9 }
+          let(:invaders_count) { 1 }
+          include_examples 'found required invaders'
+        end
       end
     end
   end
