@@ -2,9 +2,10 @@ require 'space_invaders_detector/radar'
 
 RSpec.describe SpaceInvadersDetector::Radar do
   let(:accuracy) { described_class::ACCURACY }
+  let(:map_presence) { described_class::MAP_PRESENCE }
 
   shared_examples 'found required invaders' do
-    subject { described_class.new(accuracy: accuracy) }
+    subject { described_class.new(accuracy: accuracy, map_presence: map_presence) }
 
     before(:each) do
       subject.load_map(map)

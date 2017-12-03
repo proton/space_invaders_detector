@@ -47,11 +47,28 @@ RSpec.describe SpaceInvadersDetector::Image do
   end
 
   describe '#area' do
-    let(:array) { %w(--o -o-) }
+    before(:each) { subject.load_image image_array }
 
-    it 'loads successfully' do
-      subject.load_image array
+    it 'equals to with * height' do
       expect(subject.area).to eq(6)
+    end
+  end
+
+  describe '#has_cords?' do
+    before(:each) { subject.load_image image_array }
+
+    context 'good cords' do
+      it 'returns true' do
+        expect(subject.has_cords? 0, 0).to be_truthy
+        expect(subject.has_cords? 1, 2).to be_truthy
+      end
+    end
+
+    context 'bad cords' do
+      it 'returns false' do
+        expect(subject.has_cords? -1, 0).to be_falsey
+        expect(subject.has_cords? 1, 3).to be_falsey
+      end
     end
   end
 end

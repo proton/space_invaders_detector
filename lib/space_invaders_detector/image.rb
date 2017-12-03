@@ -44,10 +44,12 @@ module SpaceInvadersDetector
       width * height
     end
 
-    def [](y, x)
-      raise 'y is incorrect' unless (0...height).cover? y
-      raise 'x is incorrect' unless (0...width).cover? x
+    def has_cords?(y, x)
+      (0...height).cover?(y) && (0...width).cover?(x)
+    end
 
+    def [](y, x)
+      raise 'cords are incorrect' unless has_cords?(y, x)
       @image[y][x]
     end
   end

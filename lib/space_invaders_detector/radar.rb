@@ -1,13 +1,16 @@
 require 'space_invaders_detector/invader'
+require 'space_invaders_detector/detector'
 
 module SpaceInvadersDetector
   class Radar
     ACCURACY = 0.9
+    MAP_PRESENCE = 0.7
 
-    attr_reader :accuracy
+    attr_reader :required_probability, :required_map_presence
 
-    def initialize(accuracy: ACCURACY)
-      @accuracy = accuracy
+    def initialize(accuracy: ACCURACY, map_presence: MAP_PRESENCE)
+      @required_probability = accuracy
+      @required_map_presence = map_presence
       reset_invader_samples
     end
 
@@ -40,38 +43,26 @@ module SpaceInvadersDetector
       @invaders = []
 
       @invader_samples.each do |sample|
-        ys = 0..(@map.height - sample.height)
-        xs = 0..(@map.width - sample.width)
+        ys = (-sample.height + 1)...@map.height
+        xs = (-sample.width + 1)...@map.width
 
         ys.each do |y|
           xs.each do |x|
-            invader = test_cords_for_invader(sample, y, x)
-            @invaders << invader if invader
+            detector = SpaceInvadersDetector::Detector.new(@map, sample, y, x)
+            next if detector.map_presence < required_map_presence
+            next if detector.probability < required_probability
+
+            @invaders << SpaceInvadersDetector::Invader.new(sample,
+                                                            detector.top_y,
+                                                            detector.bottom_y,
+                                                            detector.left_x,
+                                                            detector.right_x,
+                                                            detector.probability,
+                                                            detector.map_presence)
           end
         end
       end
       @invaders
-    end
-
-    def test_cords_for_invader(sample, map_y, map_x)
-      matches = 0
-      (0...sample.height).each do |y|
-        (0...sample.width).each do |x|
-          sample_val = sample[y, x]
-          map_val = @map[map_y + y, map_x + x]
-          matches += 1 if sample_val == map_val
-        end
-      end
-
-      probability = matches.to_f / sample.area
-      return if probability < accuracy
-
-      SpaceInvadersDetector::Invader.new(sample,
-                                         map_y,
-                                         map_y + sample.height - 1,
-                                         map_x,
-                                         map_x + sample.width - 1,
-                                         probability: probability)
     end
   end
 end
