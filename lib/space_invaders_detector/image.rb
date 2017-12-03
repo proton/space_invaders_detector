@@ -6,10 +6,6 @@ module SpaceInvadersDetector
     OBJECT_SYMBOL = 'o'
     SYMBOL_VALUES = { SPACE_SYMBOL => 0, OBJECT_SYMBOL => 1 }
 
-    def initialize(arr2d = nil)
-      load_image(arr2d) if arr2d
-    end
-
     def load_image(arr2d)
       @height = arr2d.size
       raise 'load error: image is empty' if height.zero?
