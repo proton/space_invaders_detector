@@ -1,0 +1,16 @@
+--o-----o--
+-------o---
+--ooooooo--
+-oo-oooooo-
+ooooooooooo
+o-ooooooo-o
+o-o-----o-o
+---oo-oo---
+------oo---
+-----oooo--
+----oo-ooo-
+----o-oo-oo
+---oooooooo
+-----o--o--
+----o-o--o-
+---o-o--o-o

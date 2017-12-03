@@ -2,7 +2,7 @@ require 'space_invaders_detector/invader'
 
 module SpaceInvadersDetector
   class Radar
-    ACCURACY = 0.95
+    ACCURACY = 0.9
 
     attr_reader :accuracy
 
@@ -70,7 +70,8 @@ module SpaceInvadersDetector
                                          map_y,
                                          map_y + sample.height - 1,
                                          map_x,
-                                         map_x + sample.width - 1)
+                                         map_x + sample.width - 1,
+                                         probability: probability)
     end
   end
 end
