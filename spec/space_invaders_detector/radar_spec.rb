@@ -20,7 +20,7 @@ RSpec.describe SpaceInvadersDetector::Radar do
 
   context 'no samples' do
     let(:map) { SpaceInvadersDetector::Image.new %w(o- -o) }
-    let(:invader_samples) { [g] }
+    let(:invader_samples) { [] }
     let(:invaders_count) { 0 }
 
     include_examples 'found required invaders'
@@ -51,14 +51,54 @@ RSpec.describe SpaceInvadersDetector::Radar do
   end
 
   context 'real data' do
-    let(:map) { SpaceInvadersDetector::Image.new 'spec/support/files/map2.txt' }
     let(:invader_samples) do
       %w(invader_0.txt invader_1.txt).map do |file_name|
         SpaceInvadersDetector::Image.new "spec/support/files/#{file_name}"
       end
     end
-    let(:invaders_count) { 2 }
 
-    include_examples 'found required invaders'
+    context 'map1' do
+      let(:map) { SpaceInvadersDetector::Image.new 'spec/support/files/map.txt' }
+
+      context 'accuracy 1.0' do
+        let(:accuracy) { 1.0 }
+        let(:invaders_count) { 0 }
+        include_examples 'found required invaders'
+      end
+
+      context 'accuracy 0.9' do
+        let(:accuracy) { 0.9 }
+        let(:invaders_count) { 1 }
+        include_examples 'found required invaders'
+      end
+
+      context 'accuracy 0.8' do
+        let(:accuracy) { 0.8 }
+        let(:invaders_count) { 7 }
+        include_examples 'found required invaders'
+      end
+    end
+
+    context 'map2' do
+      let(:map) { SpaceInvadersDetector::Image.new 'spec/support/files/map2.txt' }
+
+      context 'accuracy 1.0' do
+        let(:accuracy) { 1.0 }
+        let(:invaders_count) { 1 }
+        include_examples 'found required invaders'
+      end
+
+      context 'accuracy 0.9' do
+        let(:accuracy) { 0.9 }
+        let(:invaders_count) { 2 }
+        include_examples 'found required invaders'
+      end
+
+      context 'accuracy 0.8' do
+        let(:accuracy) { 0.8 }
+        let(:invaders_count) { 2 }
+        include_examples 'found required invaders'
+      end
+    end
   end
 end
