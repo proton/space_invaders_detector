@@ -20,9 +20,10 @@ module SpaceInvadersDetector
 
     def load_image(arr2d)
       @height = arr2d.size
-      raise 'load error: image is empty' if height.zero?
+      raise 'image is empty' if height.zero?
       @width = arr2d[0].size
-      raise 'load error: image is empty' if width.zero?
+      raise 'image is empty' if width.zero?
+      raise 'image should be array of strings' unless arr2d[0].is_a?(String)
 
       @image = []
       arr2d.each do |row|

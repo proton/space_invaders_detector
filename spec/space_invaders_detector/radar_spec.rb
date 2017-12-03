@@ -2,7 +2,7 @@ require 'space_invaders_detector/radar'
 
 RSpec.describe SpaceInvadersDetector::Radar do
   context 'no samples' do
-    let(:map) { %w(o- -o) }
+    let(:map) { SpaceInvadersDetector::Image.new %w(o- -o) }
 
     it 'found zero invaders' do
       subject.load_map map
@@ -11,8 +11,8 @@ RSpec.describe SpaceInvadersDetector::Radar do
   end
 
   context 'empty map' do
-    let(:map) { %w(-- --) }
-    let(:invader_sample) { %w(o) }
+    let(:map) { SpaceInvadersDetector::Image.new %w(-- --) }
+    let(:invader_sample) { SpaceInvadersDetector::Image.new %w(o) }
 
     it 'found zero invaders' do
       subject.load_map map
@@ -22,7 +22,7 @@ RSpec.describe SpaceInvadersDetector::Radar do
   end
 
   context 'sample same with map' do
-    let(:map) { %w(oo oo) }
+    let(:map) { SpaceInvadersDetector::Image.new %w(oo oo) }
     let(:invader_sample) { map }
 
     it 'found one invader' do
@@ -33,8 +33,8 @@ RSpec.describe SpaceInvadersDetector::Radar do
   end
 
   context 'map with invaders' do
-    let(:map) { %w(o- -o) }
-    let(:invader_sample) { map }
+    let(:map) { SpaceInvadersDetector::Image.new %w(o- -o) }
+    let(:invader_sample) { SpaceInvadersDetector::Image.new %w(o) }
 
     it 'found some invaders' do
       subject.load_map map
