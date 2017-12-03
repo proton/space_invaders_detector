@@ -6,6 +6,18 @@ module SpaceInvadersDetector
     OBJECT_SYMBOL = 'o'
     SYMBOL_VALUES = { SPACE_SYMBOL => 0, OBJECT_SYMBOL => 1 }
 
+    def initialize(init_data = nil)
+      case init_data
+      when Array
+        load_image init_data
+      when String
+        load_image_file init_data
+      when NilClass
+      else
+        raise 'unknown initialization data'
+      end
+    end
+
     def load_image(arr2d)
       @height = arr2d.size
       raise 'load error: image is empty' if height.zero?
@@ -22,9 +34,13 @@ module SpaceInvadersDetector
       end
     end
 
-    def load_image_file(filepath)
-      arr2d = File.open(filepath).readlines.map(&:strip)
+    def load_image_file(file_path)
+      arr2d = File.open(file_path).readlines.map(&:strip)
       load_image(arr2d)
+    end
+
+    def area
+      width * height
     end
 
     def [](y, x)
