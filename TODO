@@ -1,4 +1,5 @@
-- basic modules
 - specs
 - realisation
-- flags (corner + accuracy)
+- flags (edge cases + accuracy) / configure?
+- what to do with situation when one invader overflows another one?
+
